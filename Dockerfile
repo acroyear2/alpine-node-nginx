@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:4
 RUN apk update && \
-    apk add bash nginx && \
+    apk add bash nginx openssl && \
     rm -rf /var/cache/apk/* && \
     rm -rf /tmp/*
 RUN mkdir -p /run/nginx

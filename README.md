@@ -22,3 +22,8 @@ By default, the newly generated `nginx.conf` file does not contain any [`proxy_p
 ## Rewrites for client-side routing
 
 When set, `REWRITE_PATHS` environment variable should contain a single-space separated list of paths which will serve `index.html` as well. This is especially useful for applications that has client-side based routing using `pushState()` or whatever.
+
+## Basic authentication
+
+You can set `HAS_BASIC_AUTH` value to add HTTP authentication for free. By default, username and password is `admin:admin`. You can change these to different values using `BASIC_AUTH_USER` and `BASIC_AUTH_PASSWORD` environment variables.
+

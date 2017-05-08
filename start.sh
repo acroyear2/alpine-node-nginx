@@ -6,6 +6,20 @@ function join_by {
   echo "$*"
 }
 
+BASIC_AUTH_PART=
+
+[ ! -z "$HAS_BASIC_AUTH" ] && {
+    BASIC_AUTH_USER=${BASIC_AUTH_USER:-"admin"}
+    BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD:-"admin"}
+
+    printf "${BASIC_AUTH_USER}:`openssl passwd -apr1 ${BASIC_AUTH_PASSWORD}`\n" > /etc/nginx/.htpasswd
+
+    read -r -d '' BASIC_AUTH_PART << EOM
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+EOM
+}
+
 REWRITES_PART=
 
 REWRITE_PATHS=(${REWRITE_PATHS// / })
@@ -38,9 +52,12 @@ API_PART=
             proxy_set_header          Host \$host;
             proxy_buffering           off;
             proxy_request_buffering   off;
+            $BASIC_AUTH_PART
         }
 EOM
 }
+
+
 
 cat > /etc/nginx/nginx.conf <<EOF
 worker_processes  1;
@@ -93,6 +110,7 @@ http {
 
         location / {
             index  index.html;
+            $BASIC_AUTH_PART
         }
     }
 }
