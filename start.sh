@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Following environment variables has effects on the /etc/nginx/nginx.conf file that will be generated:
-
-# HAS_NODE              : Should be set if a nodejs proxy pass is desired
-# NODE_EXTERNAL_ENDPOINT: External endpoint that points to the nodejs app (default: api)
-# NODE_INTERNAL_ENDPOINT: Internal nodejs endpoint where the requests will be forwarded to (default: api/)
-# REWRITE_PATHS         : A comma separated array of endpoints where the HTML is served
-
 function join_by {
   local IFS="$1"
   shift
@@ -104,7 +97,5 @@ http {
     }
 }
 EOF
-
-# Start nginx
 
 nginx -g 'pid /tmp/nginx.pid; daemon off;'
