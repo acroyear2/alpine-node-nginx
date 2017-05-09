@@ -27,3 +27,7 @@ When set, `REWRITE_PATHS` environment variable should contain a single-space sep
 
 You can set `HAS_BASIC_AUTH` value to add HTTP authentication for free. By default, username and password is `admin:admin`. You can change these to different values using `BASIC_AUTH_USER` and `BASIC_AUTH_PASSWORD` environment variables.
 
+## Health check endpoint
+
+When set, `HEALTH_CHECK` installs the `/health` endpoint which will bypass the Basic auth and respond with 204.
+

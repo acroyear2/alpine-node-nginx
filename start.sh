@@ -57,7 +57,17 @@ API_PART=
 EOM
 }
 
+HEALTH_CHECK_PART=
 
+[ ! -z "$HEALTH_CHECK" ] && {
+    read -r -d '' HEALTH_CHECK_PART << EOM
+        location = /health {
+            return  200;
+            auth_basic  off;
+            access_log  off;
+        }
+EOM
+}
 
 cat > /etc/nginx/nginx.conf <<EOF
 worker_processes  1;
@@ -112,6 +122,8 @@ http {
             index  index.html;
             $BASIC_AUTH_PART
         }
+
+        $HEALTH_CHECK_PART
     }
 }
 EOF
