@@ -62,7 +62,7 @@ HEALTH_CHECK_PART=
 [ ! -z "$HEALTH_CHECK" ] && {
     read -r -d '' HEALTH_CHECK_PART << EOM
         location = /health {
-            return  200;
+            return  204;
             auth_basic  off;
             access_log  off;
         }
